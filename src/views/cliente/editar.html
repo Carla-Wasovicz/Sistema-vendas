@@ -7,14 +7,15 @@
             <h3>Adicionar Cliente</h3>
         </header>
         <div class="card-body">
-            <form action="/cliente/salvar" method="post"> 
+            <form action="/cliente/atualizar" method="post">
+                <input type="hidden" name="id" value={{cliente.id}}> 
                 <div class="form-group">
                     <label>Nome</label>
-                    <input type="text" name="nome" class="form-control" required>
+                    <input type="text" name="nome" value="{{cliente.nome}}" class="form-control">
                 </div>
                 <div class="form-group">
                     <label>CPF</label>
-                    <input type="number" name="cpf" class="form-control" required>
+                    <input type="number" name="cpf" value="{{cliente.cpf}}" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
