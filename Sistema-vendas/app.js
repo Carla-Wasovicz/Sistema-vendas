@@ -1,15 +1,8 @@
+
 const express = require('express')
 const nunjucks = require('nunjucks')
-const { Connection } = require('pg')
-const { db } = require('./src/db/connection')
-const {} = require('./src/db/Connection')
+const clienteController = require('./src/controllers/ClienteController')
 
-/*db.query('SELECT * FROM cliente', (err,result)=>{
-   if(err){
-    console.log('Houve um erro ao conectar: ${err}')
- }
-     console.table(result.rows)
- })*/
 
 const app = express()
 const port = 3000
@@ -21,7 +14,8 @@ nunjucks.configure('./src/views', {
   autoescape: true,
   express: app
 });
-app.get('/',(req,res) => {
+
+app.get('/',(req,res)=>{
   res.render('index')
 })
 app.get('/categoria-produto/listar',(req,res)=>{
@@ -31,33 +25,14 @@ app.get('/categoria-produto/listar',(req,res)=>{
 app.get('/categoria-produto/adicionar',(req,res)=>{
   res.render('categoria-produto/adicionar')
 })
-//rotas p cadastrar clientes
+// ROTAS PARA CADASTRO DE CLIENTES
 
-app.get('/cliente/listar',(req,res)=>{
-  db.query('SELECT * FROM cliente', (err,result)=>{
-    if (err) {
-      console.log('Houve um erro ao listar os clientes:${err}')
-    }
-    res.render('cliente/listar',{clientes:result.rows})
-  })
- 
-})
-app.get('/cliente/adicionar',(req,res)=>{
-  res.render('cliente/adicionar')
-})
-app.post('/cliente/salvar',(req, res)=>{
-  const query = {
-    text:'INSERT INTO cliente(nome,cpf) VALUES ($1,$2)',
-    values:[req.body.nome,req.bory.cpf]
-  }
-db.query(query,(err,result)=>{
-  if (err) {
-    console.log('Houve um erro ao inserir o cliente')
-  }
-  console.log(result)
-})
-  res.redirect('/cliente/listar')
-})
+app.get('/cliente/listar',clienteController.index)
+app.get('/cliente/adicionar',clienteController.create)
+app.post('/cliente/salvar',clienteController.store)
+app.get('/cliente/editar/:id',clienteController.edit)
+app.post('/cliente/atualizar',clienteController.update)
+app.get('/cliente/excluir/:id',clienteController.delete)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
