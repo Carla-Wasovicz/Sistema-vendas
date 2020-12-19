@@ -25,6 +25,19 @@ class PagamentoController{
             res.redirect('/forma-pagamento/listar') 
           })    
     }
+    edit(req,res){
+        
+        const query = {
+           text:'SELECT * FROM forma_pagamento WHERE id=$1',
+           values:[req.params.id] 
+        }
+        db.query(query,(err,result)=>{
+            if(err){
+                console.log(`houve um erro ao editar: ${err}`)
+            }
+            res.render('forma-pagamento/editar',{pagamentos:result.rows[0]})
+        })
+    }
     
     update(req,res){
         const dados = req.body

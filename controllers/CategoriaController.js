@@ -24,10 +24,23 @@ class CategoriaController{
             res.redirect('/categoria-produto/listar') 
           })    
     }
+    edit(req,res){
+        
+        const query = {
+           text:'SELECT * FROM categoria_produto WHERE id=$1',
+           values:[req.params.id] 
+        }
+        db.query(query,(err,result)=>{
+            if(err){
+                console.log(`houve um erro ao editar: ${err}`)
+            }
+            res.render('categoria-produto/editar',{categorias:result.rows[0]})
+        })
+    }
     update(req,res){
         const dados = req.body
         const query = {
-            text:'UPDATE cliente SET nome=$1,cpf=$2  WHERE id=$3',
+            text:'UPDATE categoria_produto SET nome=$1,cpf=$2  WHERE id=$3',
             values:[dados.descricao,dados.id]
         }
         db.query(query,(err,result)=>{

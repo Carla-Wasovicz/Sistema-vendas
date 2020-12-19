@@ -25,6 +25,19 @@ class UsuarioController{
             res.redirect('/usuario/listar') 
           })    
     }
+    edit(req,res){
+        
+        const query = {
+           text:'SELECT * FROM usuario WHERE id=$1',
+           values:[req.params.id] 
+        }
+        db.query(query,(err,result)=>{
+            if(err){
+                console.log(`houve um erro ao editar: ${err}`)
+            }
+            res.render('usuario/editar',{usuarios:result.rows[0]})
+        })
+    }
     
     update(req,res){
         const dados = req.body
