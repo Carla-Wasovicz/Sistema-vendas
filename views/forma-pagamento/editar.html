@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block main %}
+
+    <section class="card m-5">
+        <header class="card-header">
+            <h3>Adicionar forma de pagamento</h3>
+        </header>
+        <div class="card-body">
+            <form action="/forma-pagamento/atualizar" method="post">
+                <input type="hidden" name="id" value={{forma_pagamento.id}}> 
+                <div class="form-group">
+                    <label>descrição</label>
+                    <input type="text" name="desc" value="{{forma_pagamento.descricao}}" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </form>
+        </div><!-- card-body -->
+    </section><!-- card-->
+
+   
+{% endblock %}
